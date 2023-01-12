@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+    <title>{% block title %}{% endblock %}</title>
+        <!-- Material icons from Google -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body class="bg-light" style="height: 100vh;">
+
+    {% if get_flashed_messages() %}
+        <div class="alert alert-primary border text-center" role="alert">
+        {{ get_flashed_messages() | join(" ") }}
+        </div>
+    {% endif %}
+
+    <div class="h-100 d-flex flex-column justify-content-between">
+        <main class="h-100">
+            {% block main %}
+    
+            {% endblock %}
+            </main>
+        
+        {% if session %}
+        <nav class=" position-fixed bottom-0 w-100 navbar navbar bg-primary shadow fw-bold">
+            <div class="container-fluid">
+                <div class=" nav justify-content-center w-100" id="navbarSupportedContent">
+                    <ul class="nav w-100 d-flex justify-content-around  align-items-center h-100">
+                        <li class="nav-item d-flex flex-column align-items-center py-3">
+                            <a class="nav-link text-center" aria-current="page" href="/">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door d-block m-auto" viewBox="0 0 16 16">
+                                    <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146ZM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5Z"/>
+                                  </svg>
+                                Home
+                            </a>
+                        </li>
+                        <li class="nav-item d-flex flex-column align-items-center py-3 nav-link">
+                            <a class="nav-link text-white text-center" href="/summary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search d-block m-auto" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                </svg>
+                                Views
+                            </a>
+                        </li>
+
+                        <li class="nav-item d-flex flex-row justify-content-center p-1 add-shift">
+                            <a class="text-white d-flex flex-column align-items-center" href="/load">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-plus-circle-fill mb-1" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                                </svg>
+                            </a>
+                        </li>
+                        <li class="nav-item d-flex flex-column align-items-center py-3 nav-link">
+                            <a class="nav-link text-white text-center" href="/profile?id={{ session['user_id'] }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person d-block m-auto" viewBox="0 0 16 16">
+                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
+                                  </svg>
+                                Profile
+                            </a>
+                        </li>
+                        <li class="nav-item d-flex flex-column align-items-center py-3 nav-link">
+                            <a class="nav-link text-white text-center" href="/logout">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-door-closed d-block m-auto" viewBox="0 0 16 16">
+                                    <path d="M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2zm1 13h8V2H4v13z"/>
+                                    <path d="M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0z"/>
+                                  </svg>
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        {% else %}
+        <nav class=" position-fixed bottom-0 w-100 navbar navbar bg-primary shadow fw-bold">
+            <div class="container-fluid">
+                <div class=" nav justify-content-center w-100" id="navbarSupportedContent">
+                    <ul class="nav w-100 d-flex justify-content-around  align-items-center h-100">
+                        <li class="nav-item d-flex flex-column align-items-center py-3">
+                            <a class="nav-link text-center" aria-current="page" href="/login">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person d-block m-auto" viewBox="0 0 16 16">
+                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
+                                  </svg>
+                                Login
+                            </a>
+                        </li>
+
+                        <li class="nav-item d-flex flex-row justify-content-center p-1 add-shift">
+                            <h1 class="h3">
+                                <div class=" text-nowrap" id="text-logo">
+                                    <h1 class="mt-2" data-bs-toggle="offcanvas" href="#offcanvas" role="button" aria-controls="offcanvas">
+                                       C
+                                    </h1>
+                                </div>
+                            </h1>
+                        </li>
+
+                        <li class="nav-item d-flex flex-column align-items-center py-3 nav-link">
+                            <a class="nav-link text-white text-center" href="/register" >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-add d-block m-auto" viewBox="0 0 16 16">
+                                    <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
+                                    <path d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z"/>
+                                  </svg>
+                                Register
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
+            <div class="offcanvas-header d-flex justify-content-between align-items-center">
+                <div class="offcanvas-header text-nowrap d-flex justify-content-center align-items-center" id="text-logo-offcanvas">
+                    <h1 class="mt-2" data-bs-toggle="offcanvas" href="#offcanvas" role="button" aria-controls="offcanvas">
+                       C
+                    </h1>
+                </div>
+                <hr>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <div>
+                PayCheckr is a user-friendly web application designed for workers to easily track and manage their daily working shifts. The application allows you to input your shift details, including start and end times, and calculates your daily working hours and pay using the individual tax regulations from Victoria, Australia. You can view your gross earnings, net earnings, and taxes, as well as total hours worked for any chosen date range. With PayCheckr, keeping track of your pay has never been easier. It's the perfect tool for any worker looking to stay organized and in control of their earnings. Whether you're a freelancer, part-time employee, or full-time worker, PayCheckr has got you covered.
+              </div>
+            </div>
+          </div>
+        {% endif %}
+
+        <script src="static/bootstrap.bundle.js"></script>
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+        {% block js %} {% endblock %}
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "name": "cms",
+  "version": "1.0.0",
+  "description": "Check My Shift allows users to track and analyse their working shift values to ensure accuracy between the employer and the employee.",
+  "main": "index.js",
+  "scripts": {
+    "compile:sass":"sass --watch scss:static/",
+    "dev":"parcel templates/index.html",
+    "build": "parcel build templates/index.html"
+  },
+  "keywords": [
+    "python",
+    "flask",
+    "sqlalchemy",
+    "werkzeug",
+    "bootstrap",
+    "sass"
+  ],
+  "author": "Farlane Badache",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.13",
+    "bootstrap": "^5.2.3",
+    "postcss-cli": "^10.1.0",
+    "sass": "^1.57.1"
+  }
+}

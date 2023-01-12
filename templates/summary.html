@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+<div class="container-fluid overflow-auto" style="max-height: 85%;">
+    <div class="container my-5 d-flex justify-content-center">
+        <form action="/summary" method="GET" name="indexForm" class="w-75 d-flex justify-content-around">
+            <div class="">
+                <input type="date" placeholder="dd-mm-yyyy" value="{{ myDate1.strftime('%Y-%m-%d') }}" class=" d-inline rounded p-2 border border-primary" name="viewDate1" id="viewDate" style="font-size: 0.5em; color: var(--bs-primary);">
+            </div>
+            <div class="">
+                <input type="date" placeholder="dd-mm-yyyy" value="{{ myDate2.strftime('%Y-%m-%d') }}" class=" d-inline rounded p-2 border border-primary" name="viewDate2" id="viewDate" style="font-size: 0.5em; color: var(--bs-primary);">      
+            </div>
+            <div class="">
+                <button type="submit" class="btn bg-white text-primary rounded p-2 border border-primary" style="font-size: 0.5em; color: var(--bs-primary);">Go</button>
+            </div>
+        </form>
+    </div>
+    <main class="container-fluid mt-5 d-md-flex justify-content-md-evenly">
+        <div class=" recent-shifts shift-details mx-5 overflow-auto">
+            <table class="table" style="font-size: 0.6em !important;">
+            <thead>
+                <tr>
+                <th>Edit</th>
+                <th>Date</th>
+                <th>Hours</th>
+                <th style="display: table-cell;">Start</th>
+                <th style="display:table-cell;">End</th>
+                <th>Gross</th>
+                <th>Taxes</th>
+                <th>Net</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for shift in shifts %}
+                <tr>
+                <td style="display: flex;">
+                    <a href="/delete?id={{ shift.id }}" style="display: table-cell">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                    </svg>
+                    </a>
+                    <a  href="/edit?id={{ shift.id }}" style="display: table-cell;">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                    <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
+                    </svg>
+                    </a>
+                </td>
+                <td>{{shift.date.strftime('%d.%m.%y')}}</td>
+                <td>{{ '%0.2f'|format(shift.hours) }}</td>
+                <td style="display: table-cell;">{{ shift.start }}</td>
+                <td style="display: table-cell;">{{ shift.end }} </td>
+                <td class="primary">{{ '%0.2f'|format(shift.gross_income) }}</td>
+                <td class="danger">{{ '%0.2f'|format(shift.taxes) }}</td>
+                <td class="success">{{ '%0.2f'|format(shift.net_income) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+        </div>
+        <div class="mt-5 mx-1 cardBox w-auto">
+            <div class="kard my-3 p-2 m-auto bg-white shadow rounded d-flex justify-content-between" style="font-size: 0.6em !important;">
+                <div>
+                <div class="numbers fw-bold">{{ currentHours }}</div>
+                <div class="cardName text-muted">Hours</div>
+                </div>
+                <div class="iconBx text-warning opacity-50">
+                <ion-icon name="time-outline"></ion-icon>   
+                </div>
+            </div>
+            <div class="kard my-3 p-2 m-auto bg-white  shadow rounded d-flex justify-content-between" style="font-size: 0.6em !important;">
+                <div>
+                <div class="numbers fw-bold">{{ "$%.2f"|format(currentnet_earnings) }}</div>
+                <div class="cardName text-muted">Marginal earnings</div>
+                </div>
+                <div class="iconBx text-success opacity-50">
+                <ion-icon name="enter-outline"></ion-icon>
+                </div>
+            </div>
+            <div class="mb-5 kard my-3 p-2 m-auto bg-white shadow rounded d-flex justify-content-between" style="font-size: 0.6em !important;">
+                <div>
+                <div class="numbers fw-bold">{{ "$%.2f"|format(currentTaxes) }}</div>
+                <div class="cardName text-muted">Marginal taxes</div>
+                </div>
+                <div class="iconBx text-danger opacity-50">
+                <ion-icon name="exit-outline"></ion-icon>  
+            </div>
+        </div>
+    </main>
+</div>
+
+{% endblock %}
+
+{% block js %} 
+
+<script> document.getElementById('viewDate').valueAsDate = new Date() </script>
+<script src="static/main.js"></script>
+
+{% endblock %}

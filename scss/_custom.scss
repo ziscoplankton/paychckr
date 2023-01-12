@@ -1,0 +1,35 @@
+$blue:    #225560;
+$indigo:  #6610f2;
+$purple:  rgba(153, 102, 255, 1);
+$pink:    #d63384;
+$red:     #D81159;
+$orange:  rgba(255, 159, 64, 1);
+$yellow:  #FFB627;
+$green:   #00BD9D  ;
+$teal:    #97efe9;
+$cyan:    rgba(75, 192, 192, 1);
+
+$white:    #fff;
+$gray-100: #f8f9fa; 
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d ;
+$gray-700: #495057 ;
+$gray-800: #343a40 ;
+$gray-900: #212529 ;
+$black:    #000 ;
+
+
+
+$primary:       $blue;
+$secondary:     $green;
+$success:       $green;
+$info:          $orange;
+$warning:       $yellow;
+$danger:        $red;
+$light:         $gray-100;
+$dark:          $gray-900;
+
+@import "../node_modules/bootstrap/scss/bootstrap.scss";

@@ -1,0 +1,11 @@
+@use '../custom' as *;
+
+.bug-404 {
+    position: absolute;
+    top: 25%;
+    left: 10%;
+    transform-origin: bottom;
+    transform: translateY(75px);
+    fill: $primary;
+}
+

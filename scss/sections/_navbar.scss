@@ -1,0 +1,59 @@
+@use '../components/mixins' as *;
+@use '../custom' as *;
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Plaster&family=Spicy+Rice&family=Train+One&family=Zen+Tokyo+Zoo&display=swap');
+.navbar {
+    font-size: .2em;
+    a {
+    font-size: 2em !important;
+    }
+    .nav-item {
+        width: 20% !important;
+
+    }
+    .add-shift {
+        transform: scale(1.2);
+        margin-bottom: .5em;
+    }
+
+    ul li a{
+        color: $white !important;
+    }
+
+    .dropdown-menu {
+        @include glassBackground;
+    }
+}
+
+#text-logo {
+    color: #FFF;
+    font-weight: 700;
+    font-size: 5em;
+    text-align: center;
+    transform: rotate(-20deg) skew(20deg);
+    font-family: 'Spicy Rice';
+    background-color: $primary;
+    border-radius: 5px;
+    height: 40px;
+    width: 40px;
+}
+
+
+.offcanvas {
+    @include glassBackground;
+    color: #FFF;
+
+    #text-logo-offcanvas
+    {
+        color: #FFF;
+        font-weight: 700;
+        font-size: 5em;
+        text-align: center;
+        font-family: 'Spicy Rice';
+        background-color: $primary;
+        border: 1px solid #FFF;
+        border-radius: 5px;
+        height: 40px;
+        width: 40px;
+    }
+}
+

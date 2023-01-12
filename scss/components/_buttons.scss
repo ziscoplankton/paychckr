@@ -1,0 +1,12 @@
+@use '../custom' as *;
+@use '../components/mixins' as *;
+.key-register-pw{
+    .bi-key-fill {
+        @include clickMe;
+
+    }
+}
+
+.bi-plus-circle-fill:hover {
+    opacity: 1;
+}

@@ -1,0 +1,117 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<h1 class="h3 p-1 p-md-3 fw-semibold display-4 text-center text-white login-title rounded-top rounded-circle bg-primary">
+   <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-person-add" viewBox="0 0 16 16">
+      <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
+      <path d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z"/>
+      </svg>
+   </h1>
+<div class="container-fluid overflow-auto" style="max-height: 85%;">
+   <section class="register form-signin text-start text-sm-center w-100 m-auto mt-1 mt-md-2" id="register">
+   <div class="container h-100">
+      <div class="menu container-fluid">
+         <form action="/register" method="post">
+            <div class="input-group mb-1">
+               <span class="input-group-text text-black" id="basic-addon1">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                     <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                     </svg>
+               </span>
+               <input type="text" class="form-control rounded-end" name="username" id="username" placeholder="username" aria-label="username" aria-describedby="basic-addon1" required  style="font-size: 0.6em !important;">            
+            </div>
+            <div class="input-group mb-1">
+               <span tabindex="0" class="input-group-text key-register-pw text-black" id="basic-addon2" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-title="Password Strength" data-bs-content="Password must contain at least 8 characters including numbers and symbols(@#$%^&*)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-key-fill" viewBox="0 0 16 16">
+                     <path d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                     </svg>
+               </span>
+               <input type="text" class="form-control" name="password" id="password" placeholder="password" aria-label="password" aria-describedby="basic-addon1" required  style="font-size: 0.6em !important;">            
+            </div>
+            <div class="input-group mb-1">
+               <span class="input-group-text text-danger" id="basic-addon1">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-key" viewBox="0 0 16 16">
+                     <path d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z"/>
+                     <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                     </svg>
+               </span>
+               <input type="text" class="form-control" name="confirmation" id="confirmation" placeholder="password confirmation" aria-label="passwordconfirmation" aria-describedby="basic-addon1" required  style="font-size: 0.6em !important;">            
+            </div>
+            <div class="input-group mb-1">
+               <span class="input-group-text text-success" id="basic-addon1">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-at-fill" viewBox="0 0 16 16">
+                     <path d="M2 2A2 2 0 0 0 .05 3.555L8 8.414l7.95-4.859A2 2 0 0 0 14 2H2Zm-2 9.8V4.698l5.803 3.546L0 11.801Zm6.761-2.97-6.57 4.026A2 2 0 0 0 2 14h6.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.606-3.446l-.367-.225L8 9.586l-1.239-.757ZM16 9.671V4.697l-5.803 3.546.338.208A4.482 4.482 0 0 1 12.5 8c1.414 0 2.675.652 3.5 1.671Z"/>
+                     <path d="M15.834 12.244c0 1.168-.577 2.025-1.587 2.025-.503 0-1.002-.228-1.12-.648h-.043c-.118.416-.543.643-1.015.643-.77 0-1.259-.542-1.259-1.434v-.529c0-.844.481-1.4 1.26-1.4.585 0 .87.333.953.63h.03v-.568h.905v2.19c0 .272.18.42.411.42.315 0 .639-.415.639-1.39v-.118c0-1.277-.95-2.326-2.484-2.326h-.04c-1.582 0-2.64 1.067-2.64 2.724v.157c0 1.867 1.237 2.654 2.57 2.654h.045c.507 0 .935-.07 1.18-.18v.731c-.219.1-.643.175-1.237.175h-.044C10.438 16 9 14.82 9 12.646v-.214C9 10.36 10.421 9 12.485 9h.035c2.12 0 3.314 1.43 3.314 3.034v.21Zm-4.04.21v.227c0 .586.227.8.581.8.31 0 .564-.17.564-.743v-.367c0-.516-.275-.708-.572-.708-.346 0-.573.245-.573.791Z"/>
+                     </svg>
+               </span>
+               <input type="text" class="form-control rounded-end" name="email" id="email" placeholder="email" aria-label="email" aria-describedby="basic-addon1" required  style="font-size: 0.6em !important;">            
+            </div>
+            <div class="input-group mb-3">
+               <span class="input-group-text text-primary" id="basic-addon1">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+                     <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                     </svg>
+               </span>
+               <input type="text" class="form-control" name="workplace" id="workplace" placeholder="workplace" aria-label="workplace" aria-describedby="basic-addon1" required  style="font-size: 0.6em !important;">            
+            </div>
+            <div class="d-flex flex-column text-start w-100 mb-3">
+               <div class="form-check form-switch p-2 m-3 d-block w-50 m-auto" id="contract-switch" style="font-size: 0.6em !important;">
+                  <input type="checkbox" class="form-check-input" role="switch" name="contract" id="contract" onclick="funk(this.id)">Contracted
+               </div>
+               <div class="form-check form-switch p-2 m-3 d-block w-50 m-auto" id="other-switch" style="font-size: 0.6em !important;">
+                  <input type="checkbox" class="form-check-input" name="other" id="other" role="switch" onclick="funk(this.id)" >Hourly Based
+               </div>
+            </div>
+            <div id="other-display" class="py-1">
+               <div class="input-group mb-3 ">
+                  <span class="input-group-text bg-success" id="basic-addon1">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-coin" viewBox="0 0 16 16">
+                        <path d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9H5.5zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518l.087.02z"/>
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11zm0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"/>
+                        </svg>
+                  </span>
+                  <input type="text" class="form-control" name="payrate" id="payrate" placeholder="payrate" aria-label="payrate" aria-describedby="basic-addon1"  style="font-size: 0.6em !important;">            
+               </div>
+               <div class=" m-2 d-flex flex-column align-items-center justify-content-center">
+                  <div class="form-check form-switch"style="font-size: 0.6em !important;">
+                     <input type="checkbox" class="form-check-input" role="switch" name="penalties" id="penalties">Penalties
+                  </div>
+                  <div class="form-check form-switch"style="font-size: 0.6em !important;">
+                     <input type="checkbox" class="form-check-input" name="overtime" id="overtime" role="switch">Overtime
+                  </div>
+               </div>
+            </div>
+            <div id="contract-display">
+               <div class="input-group mb-3">
+                  <span class="input-group-text bg-success text-black" id="basic-addon1">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"/>
+                        <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1h-.003zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195l.054.012z"/>
+                        <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083c.058-.344.145-.678.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1H1z"/>
+                        <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 5.982 5.982 0 0 1 3.13-1.567z"/>
+                        </svg>
+                  </span>
+                  <input type="number" class="form-control" name="salary" id="salary" placeholder="Salary" aria-label="salary" aria-describedby="basic-addon1"  style="font-size: 0.6em !important;">            
+               </div>
+               <div class="input-group mb-3">
+                  <span class="input-group-text bg-warning" id="basic-addon1">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-alarm-fill" viewBox="0 0 16 16">
+                        <path d="M6 .5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1H9v1.07a7.001 7.001 0 0 1 3.274 12.474l.601.602a.5.5 0 0 1-.707.708l-.746-.746A6.97 6.97 0 0 1 8 16a6.97 6.97 0 0 1-3.422-.892l-.746.746a.5.5 0 0 1-.707-.708l.602-.602A7.001 7.001 0 0 1 7 2.07V1h-.5A.5.5 0 0 1 6 .5zm2.5 5a.5.5 0 0 0-1 0v3.362l-1.429 2.38a.5.5 0 1 0 .858.515l1.5-2.5A.5.5 0 0 0 8.5 9V5.5zM.86 5.387A2.5 2.5 0 1 1 4.387 1.86 8.035 8.035 0 0 0 .86 5.387zM11.613 1.86a2.5 2.5 0 1 1 3.527 3.527 8.035 8.035 0 0 0-3.527-3.527z"/>
+                        </svg>
+                  </span>
+                  <input type="number" class="form-control" name="weekly_hours" id="weekly_hours" placeholder="Weekly Hours" aria-label="weekly_hours" aria-describedby="basic-addon1"  style="font-size: 0.6em !important;">            
+               </div>
+            </div>
+            <div class="btn-signup">
+               <button class="btn mt-2 border border-primary text-primary bg-white btn-login" type="submit" id="btn-login"  style="font-size: 0.6em !important;">Sign up</button>
+            </form>
+      </div>
+   </div>
+   </section>
+</div>
+{% endblock %}
+
+{% block js %} 
+   <script src="static/registrationform.js"></script> 
+{% endblock %}

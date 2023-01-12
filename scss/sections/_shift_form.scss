@@ -1,0 +1,6 @@
+@use '../custom' as *;
+
+#btn-login:hover {
+    background-color: $primary !important;
+    color: #FFF !important;
+}

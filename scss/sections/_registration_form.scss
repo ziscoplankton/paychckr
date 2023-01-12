@@ -1,0 +1,74 @@
+@use '../custom' as *;
+@use '../components/mixins' as *;
+
+.form-signin {
+    @include absoluteCenter;
+}
+
+.form-signin {
+    font-size: 4em !important;
+    max-width: 300px;
+    max-height: 75%;
+    font-size: 1em !important;
+    transition: all 900ms ease;
+    input[type="email"] {
+        margin-bottom: -1px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    input[type="password"] {
+        margin-bottom: 10px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+    #other-switch, #contract-switch {
+        display: block;
+    }
+    
+    #other-display, #contract-display{
+        display: none;
+    } 
+    
+    .btn-signup {
+        width: fit-content;
+        margin: auto;
+    }
+
+    #btn-login:hover {
+        background-color: $primary !important;
+        color: #FFF !important;
+    }
+
+}
+
+.display-none {
+    display: none !important;
+}
+
+.login-title {
+    text-shadow: 2.5px 2.5px $black;
+}
+
+.poopover {
+    @include glassBackground;
+}
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus {   
+  border-color: rgba(126, 239, 104, 0.0);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.0) inset, 0 0 8px rgba(126, 239, 104, 0.0);
+  outline: 0 none;
+}
