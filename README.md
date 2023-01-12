@@ -344,7 +344,7 @@ def overtime(shift, day, user):
 
 * Website: [ziscoplankton](https://ziscoplankton.github.io)
 * Github: [@ziscoplankton](https://github.com/ziscoplankton)
-
+* Paychckr: [paychckr](https://ziscoplankton.pythonanywhere.com)
 ## Show your support
 
 Give a ⭐️ if this project helped you or if you just liked it!
