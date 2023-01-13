@@ -1,12 +1,7 @@
-<h1 align="center">
+<h3 align="center">
 <img src="static/images/logo512.png" width="64" height="64">
-</h1>
-<p align="center">
-  <img alt="Version" src="https://img.shields.io/github/pipenv/locked/dependency-version/ziscoplankton/csm/flask" />
-  <img alt="License: ISC" src="https://img.shields.io/github/repo-size/ziscoplankton/cms" />
-    <img alt="License: ISC" src="https://img.shields.io/w3c-validation/html?targetUrl=https%3A%2F%2Fwww.ziscoplankton.pythonanywhere.com" />
-  </a>
-</p>
+</h3>
+<br><br>
 
 ## payChckr
 
