@@ -13,7 +13,7 @@ A user-friendly web application designed for workers to easily track and manage 
 - Calculate your daily working hours and pay
 - View your gross earnings, net earnings, taxes, and total hours worked for any chosen date range
 
-> Note that this app uses the Victorian taxes regulations for individuals in Australia. It generates marginal earnings and marginal taxes. No matter if you are threesholding for $18k, the app will deduce taxes at all times.
+> Note that this app uses the Victorian taxes regulations for individuals in Australia. It generates marginal earnings and marginal taxes. No matter if you are threesholding for $18k, the app will deduct taxes at all times.
 
 ## Build
 <img    src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="python logo" width="40px" height="40px" />
@@ -340,9 +340,9 @@ def overtime(shift, day, user):
 * Website: [ziscoplankton](https://ziscoplankton.github.io)
 * Github: [@ziscoplankton](https://github.com/ziscoplankton)
 * Paychckr: [paychckr](https://ziscoplankton.pythonanywhere.com)
-## Show your support
+## Support
 
-Give a ⭐️ if this project helped you or if you just liked it!
+Give a ⭐️ if this project helped you in anyways or if you just liked it!
 
 
 ## Contribute
