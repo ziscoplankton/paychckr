@@ -8,8 +8,7 @@ from datetime import date, datetime
 import datetime
 import re
 # DB Imports
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session
+from db.db import Session
 from db.db import Users, Earnings, Shifts
 
 # CLASSES, HELPERS & CONST IMPORTS
@@ -20,8 +19,6 @@ from helpers import getCurrent_Dates
 from classes import Shift, cardShift
 
 # DB SESSION
-engine = create_engine("sqlite:///db/cms.db", echo=False)
-Session = sessionmaker(bind=engine)
 dbSession = Session()
 
 # APP DEV SET-UP FOR AUTO RELOADS
@@ -59,7 +56,7 @@ def register():
             return apology('Username not available')
         else:
             if not request.form['payrate'] and (not request.form['salary'] and not request.form['weekly_hours']):
-                return apology('Fields missing')            
+                return apology('Fields missing')
             else:
                 if request.form['password'] != request.form['confirmation']:
                     return apology("passwords are different")
@@ -80,7 +77,7 @@ def register():
                         return apology("Sorry your password must be 8 characters and have symbols")
                 dbSession.add(insert)
                 dbSession.commit()
-                return redirect('/login')                
+                return redirect('/login')
     else:
         return render_template("register.html", title = 'register')
 
@@ -139,7 +136,7 @@ def load():
                 flash('The shift values are wrong please review')
                 return redirect(url_for("load"))
             else:
-                # CALCULATE SHIFT 
+                # CALCULATE SHIFT
                 if shift:
                     day = dayShift.strftime("%a %d %b %Y")
                     if not user.annual_salary:
@@ -151,7 +148,7 @@ def load():
                             marginal_shift = penalties(shift, day, user)
                         else:
                             marginal_shift = calculator(round(shift.lengthShift,3), user.payrate)
-                        
+
                         marginal_salary = temp_salary = (marginal_shift*5) * 52
                         marginal_weekly_hrs = shift.lengthShift * 5
                         taxes = ((marginal_salary * MEDICARE_LEVY) / 52) / marginal_weekly_hrs
@@ -164,15 +161,15 @@ def load():
                                 taxes += ((((marginal_salary-45001) * TAX['45120'])/52) /marginal_weekly_hrs) * shift.lengthShift
                                 temp_salary = 18201
                         net_income = marginal_shift - taxes
-                    
+
                     else:
                         marginal_salary = user.annual_salary
                         marginal_shift = calculator(round(shift.lengthShift,3), (marginal_salary/52)/user.weekly_hours)
-                        taxes = (marginal_salary * MEDICARE_LEVY / 52) / user.weekly_hours 
+                        taxes = (marginal_salary * MEDICARE_LEVY / 52) / user.weekly_hours
                         super = (marginal_salary * SUPER / 52) / user.weekly_hours
                         taxes += ((((45000 - 18201) * TAX['1845'])/52) /user.weekly_hours) * shift.lengthShift
                         taxes += ((((marginal_salary-45001) * TAX['45120'])/52) /user.weekly_hours) * shift.lengthShift
-                        
+
                         net_income = marginal_shift - taxes
                     insert_shift = Shifts(date = shift.shiftDate, hours = round(shift.lengthShift,3), start = startShift, end = endShift, gross_income = marginal_shift, taxes = taxes, net_income = net_income, super = marginal_shift * SUPER, user_id = session['user_id'])
                     dbSession.add(insert_shift)
@@ -233,7 +230,7 @@ def summary():
     if request.args.get('viewDate1') and request.args.get('viewDate2'):
         myDate1 = datetime.datetime.strptime(request.args.get('viewDate1'), '%Y-%m-%d')
         myDate2 = datetime.datetime.strptime(request.args.get('viewDate2'), '%Y-%m-%d')
-    
+
     else:
         dates = getCurrent_Dates(date.today(), 'week')
         myDate1 = dates[0]
@@ -272,7 +269,7 @@ def edit():
             penalties = user.penalties
         else:
             penalties = 0
-        
+
         shift = Shift(dayShift, request.form['shift-start'], request.form['shift-end'], request.form['shift-break'], penalties)
         if shift and shiftToEdit and earningsToEdit:
             day = dayShift.strftime("%a %d %b %Y")
@@ -298,15 +295,15 @@ def edit():
                         taxes += ((((marginal_salary-45001) * TAX['45120'])/52) /marginal_weekly_hrs) * shift.lengthShift
                         temp_salary = 18201
                 net_income = marginal_shift - taxes
-            
+
             else:
                 marginal_salary = user.annual_salary
                 marginal_shift = calculator(round(shift.lengthShift,3), (marginal_salary/52)/user.weekly_hours)
-                taxes = (marginal_salary * MEDICARE_LEVY / 52) / user.weekly_hours 
+                taxes = (marginal_salary * MEDICARE_LEVY / 52) / user.weekly_hours
                 super = (marginal_salary * SUPER / 52) / user.weekly_hours
                 taxes += ((((45000 - 18201) * TAX['1845'])/52) /user.weekly_hours) * shift.lengthShift
                 taxes += ((((marginal_salary-45001) * TAX['45120'])/52) /user.weekly_hours) * shift.lengthShift
-                
+
                 net_income = marginal_shift - taxes
 
             earningsToEdit.gross_earnings = marginal_shift
@@ -361,7 +358,7 @@ def profile():
             else:
                 profile.salary = None
                 profile.weekly_hours = None
-            
+
             dbSession.commit()
             return redirect('/')
         else:

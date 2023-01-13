@@ -1,28 +1,24 @@
 import datetime
 from datetime import date
 from helpers import strtoint, getCurrent_Dates, getPrevious_Dates
-from db.db import Shifts
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session
+from db.db import Shifts, Session
 
 
 
 # DB SESSION
-engine = create_engine("sqlite:///db/cms.db", echo=False)
-Session = sessionmaker(bind=engine)
 dbSession = Session()
 
 
 # Model for shift creation before insert to db
 class Shift:
-    
+
     # Data Members
     shiftDate = datetime
     startShift = 0.00
     endShift = 0.00
     breakShift = 0.00
     lengthShift = 0.00
-    
+
     # Constructor
     def __init__(self, shiftDate, startShift, endShift, breakShift, penalties = 0):
         self.shiftDate = shiftDate
@@ -65,7 +61,7 @@ class Shift:
 
 # cardShift for rendering
 class cardShift:
-    
+
     #Data Members
     net_earnings = 0.00
     gross_earnings = 0.00
@@ -74,7 +70,7 @@ class cardShift:
 
     # Constructor
     def __init__(self, shifts):
-        self.net_earnings = [shift.net_income for shift in shifts] 
+        self.net_earnings = [shift.net_income for shift in shifts]
         self.gross_earnings = [shift.gross_income for shift in shifts]
         self.taxes = [shift.taxes for shift in shifts]
         self.hours = [shift.hours for shift in shifts]
@@ -98,7 +94,7 @@ class monthlyShifts():
         else:
 
             self.monthDates = monthDates = getCurrent_Dates(date.today(), 'month')
-        
+
         self.monthShifts = monthShifts = dbSession.query(Shifts).filter_by(user_id = user_id).filter(Shifts.date >= monthDates[0]).filter(Shifts.date <= monthDates[1]).all()
         # Increment monthly obj values
         if monthShifts:

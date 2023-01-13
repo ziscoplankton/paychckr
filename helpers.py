@@ -3,9 +3,7 @@ import datetime
 from functools import wraps
 import calendar
 from datetime import date
-from db.db import Shifts
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session
+from db.db import Shifts, Session
 
 # CONSTANTS
 PUBLIC_HOLIDAYS = ['2023-01-01', '2023-01-02', '2023-01-26', '2023-03-13', '2023-04-07', '2023-04-08', '2023-04-09', '2023-04-10', '2023-04-25', '2023-06-12', '2023-09-15', '2023-11-07', '2023-12-25', '2023-12-26']
@@ -24,9 +22,10 @@ MEDICARE_LEVY = 0.02
 for i in range(0,13):
     PUBLIC_HOLIDAYS[i] = datetime.datetime.strptime(PUBLIC_HOLIDAYS[i], '%Y-%m-%d')
 
+
+
+
 # DB SESSION
-engine = create_engine("sqlite:///db/cms.db", echo=False)
-Session = sessionmaker(bind=engine)
 dbSession = Session()
 
 
@@ -90,7 +89,7 @@ def strtoint(str):
 
 # Penalty indications to create marginal shift values
 def penalties(shift, day, user):
-    
+
     if shift.shiftDate in PUBLIC_HOLIDAYS:
         return calculator(round(shift.lengthShift,3), user.payrate * 2.0)
     elif day[:3] == 'Sat':
@@ -116,13 +115,13 @@ def penalties(shift, day, user):
                 return calculator(4,user.payrate * 1.125) + calculator(round(shift.lengthShift,3) - 4, user.payrate)
             else:
                 return calculator(round(shift.lengthShift,3), user.payrate * 1.125)
-        # if shift start after 6am (else)   
+        # if shift start after 6am (else)
         else:
-            return calculator(round(shift.lengthShift,3),user.payrate)        
+            return calculator(round(shift.lengthShift,3),user.payrate)
 
 # Overtime indications to create marginal shift values
 def overtime(shift, day, user):
-    
+
     if shift.shiftDate in PUBLIC_HOLIDAYS:
         return calculator(round(shift.lengthShift,3),user.payrate * 2.0)
     elif day[3:] != 'Sun':
@@ -161,7 +160,7 @@ def getCurrent_Dates(date, period):
         FYYear = date - datetime.timedelta(weeks=52)
         FYYear = FYYear.replace(month=7, day=1)
         return [FYYear, date]
-    else: 
+    else:
         return 'No date returned'
 
 def getPrevious_Dates(date, period):
@@ -202,7 +201,7 @@ def getPrevious_Dates(date, period):
         FindLastdayFY = calendar.monthrange(year=date.year+1, month=6)
         previousFYLastDay = date.replace(day=FindLastdayFY[1], month=6, year=previousFYFirstDay.year + 1)
         return [previousFYFirstDay, previousFYLastDay]
-    else: 
+    else:
         return 'No date returned'
 
 # FUNCTIONS TO RETRIEVE DB DATA
@@ -234,7 +233,7 @@ def getPrevious_Shifts(date, user_id, period):
     if period == 'year':
         return dbSession.query(Shifts).filter_by(user_id=user_id).filter(Shifts.date >= dates[0]).filter(Shifts.date <= dates[1]).all()
 
-# Object to render template    
+# Object to render template
 class monthlyShifts():
     # Data Members
     monthNet = 0
@@ -252,7 +251,7 @@ class monthlyShifts():
         else:
 
             self.monthDates = monthDates = getCurrent_Dates(date.today(), 'month')
-        
+
         self.monthShifts = monthShifts = dbSession.query(Shifts).filter_by(user_id = user_id).filter(Shifts.date >= monthDates[0]).filter(Shifts.date <= monthDates[1]).all()
         # Increment monthly obj values
         if monthShifts:
