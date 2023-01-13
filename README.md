@@ -32,11 +32,13 @@ A user-friendly web application designed for workers to easily track and manage 
 git clone 
 npm --save-dev install
 pip install Flask
-pip install SQLAlchemy
+pip install --pre SQLAlchemy
 ```
 You can also create a virtual environement using python
 ```sh
 python3 -m venv /path/to/new/virtual/environment
+source venv/bin/activate
+pip -r requirements.txt
 ```
 Usage of the scripts in the `package.json`:
 
