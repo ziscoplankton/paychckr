@@ -1,5 +1,5 @@
 @use '../custom' as *;
-
+@use '../components/mixins' as *;
 #btn-login:hover {
     background-color: $primary !important;
     color: #FFF !important;

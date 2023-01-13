@@ -13,15 +13,13 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body class="bg-light" style="height: 100vh;">
-
-    {% if get_flashed_messages() %}
-        <div class="alert alert-primary border text-center" role="alert">
-        {{ get_flashed_messages() | join(" ") }}
-        </div>
-    {% endif %}
-
     <div class="h-100 d-flex flex-column justify-content-between">
         <main class="h-100">
+            {% if get_flashed_messages() %}
+            <div class="alert alert-primary border text-black text-center position-absolute w-75" role="alert" id="flash-alert" style="transform: translate(15%, 3%);">
+            {{ get_flashed_messages() | join(" ") }}
+            </div>
+            {% endif %}
             {% block main %}
     
             {% endblock %}

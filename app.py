@@ -7,6 +7,7 @@ from tempfile import mkdtemp
 from datetime import date, datetime
 import datetime
 import re
+
 # DB Imports
 from db.db import Session
 from db.db import Users, Earnings, Shifts
@@ -77,8 +78,10 @@ def register():
                         return apology("Sorry your password must be 8 characters and have symbols")
                 dbSession.add(insert)
                 dbSession.commit()
+                flash('Your account has been created')
                 return redirect('/login')
     else:
+        flash('Welcome, please register below to create an account')
         return render_template("register.html", title = 'register')
 
 
@@ -99,6 +102,7 @@ def login():
         else:
             return apology('User Unknown')
     else:
+            flash('Hello there, you can register or login via the menu at the bottom')
             return render_template('login.html')
 
 
@@ -107,6 +111,7 @@ def login():
 @login_required
 def logout():
     session.clear()
+    flash('You are now logged out')
     return redirect('/login')
 
 
@@ -114,7 +119,6 @@ def logout():
 @app.route('/load', methods=['GET', 'POST'])
 @login_required
 def load():
-    print('helo')
     if request.method == 'GET':
         user = session['user_id']
         return render_template('load.html')
@@ -195,6 +199,7 @@ def index():
         currentWeeknet_earnings = 0
         currentWeekHours = 0
         currentWeekTaxes = 0
+        currentWeekgross_earnings = 0
 
         if not request.args.get('viewDate'):
             myDate = date.today()
@@ -214,9 +219,8 @@ def index():
                 currentWeeknet_earnings += shift.net_income
                 currentWeekHours += shift.hours
                 currentWeekTaxes += shift.taxes
-
-
-        return render_template("index.html",myDate = myDate, currentHours = currentWeekHours, currentnet_earnings = currentWeeknet_earnings, currentTaxes = currentWeekTaxes)
+                currentWeekgross_earnings += shift.gross_income
+        return render_template("index.html",myDate = myDate, currentHours = currentWeekHours, currentnet_earnings = currentWeeknet_earnings, currentWeekgross_earnings = currentWeekgross_earnings, currentTaxes = currentWeekTaxes)
     else:
         flash('Sorry something is wrong with your session and account, please login again')
         return redirect(url_for("login"))
@@ -230,16 +234,17 @@ def summary():
     if request.args.get('viewDate1') and request.args.get('viewDate2'):
         myDate1 = datetime.datetime.strptime(request.args.get('viewDate1'), '%Y-%m-%d')
         myDate2 = datetime.datetime.strptime(request.args.get('viewDate2'), '%Y-%m-%d')
-
+        flash('Great ! The view is now updated')
     else:
         dates = getCurrent_Dates(date.today(), 'week')
         myDate1 = dates[0]
         myDate2 = dates[1]
+        flash('Please choose the dates that you\'d like to view')
 
     shifts = dbSession.query(Shifts).filter_by(user_id = session['user_id']).filter(Shifts.date >= myDate1).filter(Shifts.date <= myDate2).all()
     cardShifts = cardShift(shifts)
 
-    return render_template('summary.html',shifts = shifts, currentnet_earnings = sum(cardShifts.net_earnings), currentTaxes = sum(cardShifts.taxes), currentHours = sum(cardShifts.hours), myDate1 = myDate1, myDate2 = myDate2)
+    return render_template('summary.html',shifts = shifts, currentnet_earnings = sum(cardShifts.net_earnings), currentWeekgross_earnings = sum(cardShifts.gross_earnings), currentTaxes = sum(cardShifts.taxes), currentHours = sum(cardShifts.hours), myDate1 = myDate1, myDate2 = myDate2)
 
 
 # DELETE SHIFT
@@ -249,6 +254,7 @@ def delete():
     if request.args.get('id'):
         item = dbSession.query(Shifts).filter_by(user_id = session['user_id']).filter_by(id = int(request.args.get('id'))).delete()
         dbSession.commit()
+        flash('You\'ve successfully deleted a shift')
         return redirect('/summary')
     else:
         return apology('Deletion did not worked', 204)
@@ -319,6 +325,7 @@ def edit():
             shiftToEdit.super = marginal_shift * SUPER
 
             dbSession.commit()
+            flash('You\'ve successfully edited a shift')
             return redirect('/summary')
         else:
             return apology('Not authorised', 302)
@@ -360,6 +367,7 @@ def profile():
                 profile.weekly_hours = None
 
             dbSession.commit()
+            flash('You\'ve successfully updated your profile')
             return redirect('/')
         else:
             return apology('Passwords are not identical', 302)

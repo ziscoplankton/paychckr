@@ -66,7 +66,7 @@
                 <div class="cardName text-muted">Hours</div>
                 </div>
                 <div class="iconBx text-warning opacity-50">
-                <ion-icon name="time-outline"></ion-icon>   
+                    <ion-icon name="time-outline"></ion-icon>   
                 </div>
             </div>
             <div class="kard my-3 p-2 m-auto bg-white  shadow rounded d-flex justify-content-between" style="font-size: 0.6em !important;">
@@ -78,13 +78,22 @@
                 <ion-icon name="enter-outline"></ion-icon>
                 </div>
             </div>
-            <div class="mb-5 kard my-3 p-2 m-auto bg-white shadow rounded d-flex justify-content-between" style="font-size: 0.6em !important;">
+            <div class="kard my-3 p-2 m-auto bg-white  shadow rounded d-flex justify-content-between" style="font-size: 0.6em !important;">
                 <div>
                 <div class="numbers fw-bold">{{ "$%.2f"|format(currentTaxes) }}</div>
                 <div class="cardName text-muted">Marginal taxes</div>
                 </div>
                 <div class="iconBx text-danger opacity-50">
                 <ion-icon name="exit-outline"></ion-icon>  
+            </div>
+        </div>
+        <div class="kard my-3 p-2 m-auto bg-white shadow rounded d-flex justify-content-between" style="font-size: 0.6em !important;">
+            <div>
+            <div class="numbers fw-bold">{{ "$%.2f"|format(currentWeekgross_earnings) }}</div>
+            <div class="cardName text-muted">Marginal Gross</div>
+            </div>
+            <div class="iconBx text-warning opacity-50">
+                <ion-icon name="settings-outline"></ion-icon>
             </div>
         </div>
     </main>

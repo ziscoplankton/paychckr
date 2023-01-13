@@ -1,5 +1,5 @@
 @use '../custom' as *;
-
+@use '../components/mixins' as *;
 .bug-404 {
     position: absolute;
     top: 25%;
@@ -7,5 +7,16 @@
     transform-origin: bottom;
     transform: translateY(75px);
     fill: $primary;
+}
+
+#flash-alert {
+    @include glassBackground;
+    animation: disappear 10s forwards;
+    transition: all 900ms ease;
+}
+
+@keyframes disappear {
+    from {opacity: 1;}
+    to {opacity: 0;}
 }
 
