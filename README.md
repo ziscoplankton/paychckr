@@ -32,6 +32,7 @@ A user-friendly web application designed for workers to easily track and manage 
 git clone 
 npm --save-dev install
 pip install Flask
+pip install Flask_Session
 pip install --pre SQLAlchemy
 ```
 You can also create a virtual environement using python
