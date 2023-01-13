@@ -1,5 +1,5 @@
 <h3 align="center">
-<img src="static/images/logo512.png" width="64" height="64">
+<img src="static/images/android-chrome-512x512.png" width="64" height="64">
 </h3>
 <br><br>
 
