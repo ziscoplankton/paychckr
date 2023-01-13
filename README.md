@@ -1,12 +1,14 @@
-<h1 align="center">payChckr</h1>
-<p>
+<h1 align="center">
+<img src="static/images/logo512.png" width="64" height="64">
+</h1>
+<p align="center">
   <img alt="Version" src="https://img.shields.io/github/pipenv/locked/dependency-version/ziscoplankton/csm/flask" />
   <img alt="License: ISC" src="https://img.shields.io/github/repo-size/ziscoplankton/cms" />
     <img alt="License: ISC" src="https://img.shields.io/w3c-validation/html?targetUrl=https%3A%2F%2Fwww.ziscoplankton.pythonanywhere.com" />
   </a>
 </p>
 
-## Overview
+## payChckr
 
 A user-friendly web application designed for workers to easily track and manage their daily working shifts. The application allows you to input your shift details, including start and end times, and calculates your daily working hours and pay using the individual tax regulations from Victoria, Australia. You can view your gross earnings, net earnings, and taxes, as well as total hours worked for any chosen date range. With PayCheckr, keeping track of your pay has never been easier. It's the perfect tool for any worker looking to stay organized and in control of their earnings. Whether you're a freelancer, part-time employee, or full-time worker, PayCheckr has got you covered.
 
@@ -128,22 +130,17 @@ Session_flask(app)
 ```
 
 ### db access
-Modules and classes
-```
-# DB Imports
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session
-from db.db import Users, Earnings, Shifts
-```
-
 Session
 ```
-# DB SESSION
-engine = create_engine("sqlite:///db/cms.db", echo=False)
-Session = sessionmaker(bind=engine)
-dbSession = Session()
+# DB Imports
+from sqlalchemy.orm import sessionmaker, scoped_session
+
+#DB MAIN SESSION
+engine = create_engine("sqlite:///cms.db", echo=False)
+session_factory = sessionmaker(bind=engine)
+Session = scoped_session(session_factory)
 ```
->Note that this version has unique sessions for the `app.py`, `classes.py`
+>Note that this version has a unique session imported to the entire project due to the limitation of sqlite.
 
 
 ### Views
