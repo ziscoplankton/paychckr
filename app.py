@@ -117,10 +117,12 @@ def logout():
 @app.route('/load', methods=['GET', 'POST'])
 @login_required
 def load():
+    print('helo')
     if request.method == 'GET':
         user = session['user_id']
         return render_template('load.html')
     else:
+
         if all((checks in request.form for checks in request.form)):
             dateShift = request.form['shift-date']
             startShift = request.form['shift-start']
@@ -172,7 +174,6 @@ def load():
                         taxes += ((((marginal_salary-45001) * TAX['45120'])/52) /user.weekly_hours) * shift.lengthShift
                         
                         net_income = marginal_shift - taxes
-    
                     insert_shift = Shifts(date = shift.shiftDate, hours = round(shift.lengthShift,3), start = startShift, end = endShift, gross_income = marginal_shift, taxes = taxes, net_income = net_income, super = marginal_shift * SUPER, user_id = session['user_id'])
                     dbSession.add(insert_shift)
                     dbSession.commit()
