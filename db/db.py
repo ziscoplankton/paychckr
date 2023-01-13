@@ -5,7 +5,15 @@ from sqlalchemy.orm import relationship
 from sqlalchemy import ForeignKey
 from sqlalchemy import DateTime
 from sqlalchemy import func
-engine = create_engine("sqlite:///db/cms.db", echo=True)
+
+# DB Imports
+from sqlalchemy.orm import sessionmaker, scoped_session
+
+#DB MAIN SESSION
+engine = create_engine("sqlite:///cms.db", echo=False)
+session_factory = sessionmaker(bind=engine)
+Session = scoped_session(session_factory)
+
 
 class Base(DeclarativeBase):
     pass
@@ -23,7 +31,7 @@ class Users(Base):
     paid_break = Column(Integer, nullable=True, unique=False)
     annual_salary = Column(Integer, nullable=True, unique=False)
     weekly_hours = Column(Integer, nullable=True, unique=False)
-    
+
     shifts = relationship('Shifts', backref='users')
     earnings = relationship('Earnings', backref='users')
 
@@ -54,7 +62,7 @@ class Shifts(Base):
     net_income = Column(Float, unique=False, nullable=False)
     super = Column(Float, unique=False, nullable=True)
     user_id = Column(Integer, ForeignKey('users.id'))
-    
+
     earnings = relationship('Earnings', backref='shifts')
 
     def __init__(self, date, hours, start, end, gross_income, taxes, net_income, super, user_id):
@@ -80,7 +88,7 @@ class Earnings(Base):
     net_earnings = Column(Integer, nullable=True, unique=False)
     super_earnings = Column(Integer, nullable=True, unique=False)
     shift_id = Column(Integer, ForeignKey('shifts.id'))
-    
+
     def __init__(self, user_id, gross_earnings, taxes, net_earnings, super_earnings, shift_id):
         self.user_id = user_id
         self.gross_earnings = gross_earnings
@@ -88,7 +96,7 @@ class Earnings(Base):
         self. net_earnings = net_earnings
         self.super_earnings = super_earnings
         self.shift_id = shift_id
-    
+
     def __repr__(self) -> str:
         return f'User(id={self.id!r}, name={self.username!r})'
 
