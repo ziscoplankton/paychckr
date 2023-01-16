@@ -5,13 +5,13 @@
 <div class="container-fluid overflow-auto" style="max-height: 85%;">
     <div class="container my-5 d-flex justify-content-center">
         <form action="/summary" method="GET" name="indexForm" class="w-75 d-flex justify-content-around">
-            <div class="">
+            <div>
                 <input type="date" placeholder="dd-mm-yyyy" value="{{ myDate1.strftime('%Y-%m-%d') }}" class=" d-inline rounded p-2 border border-primary" name="viewDate1" id="viewDate" style="font-size: 0.5em; color: var(--bs-primary);">
             </div>
-            <div class="">
+            <div>
                 <input type="date" placeholder="dd-mm-yyyy" value="{{ myDate2.strftime('%Y-%m-%d') }}" class=" d-inline rounded p-2 border border-primary" name="viewDate2" id="viewDate" style="font-size: 0.5em; color: var(--bs-primary);">      
             </div>
-            <div class="">
+            <div>
                 <button type="submit" class="btn bg-white text-primary rounded p-2 border border-primary" style="font-size: 0.5em; color: var(--bs-primary);">Go</button>
             </div>
         </form>

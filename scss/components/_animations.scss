@@ -11,8 +11,6 @@
 
 #flash-alert {
     @include glassBackground;
-    animation: disappear 10s forwards;
-    transition: all 900ms ease;
 }
 
 @keyframes disappear {

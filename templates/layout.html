@@ -22,8 +22,9 @@
     <div class="h-100 d-flex flex-column justify-content-between">
         <main class="h-100">
             {% if get_flashed_messages() %}
-            <div class="alert alert-primary border text-black text-center position-absolute w-75" role="alert" id="flash-alert" style="transform: translate(15%, 3%);">
-            {{ get_flashed_messages() | join(" ") }}
+            <div class="alert alert-primary alert-dismissible fade show border text-white text-center position-absolute w-75" role="alert" id="flash-alert" style="transform: translate(15%, 3%);">
+            <strong>{{ get_flashed_messages() | join(" ") }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             {% endif %}
             {% block main %}

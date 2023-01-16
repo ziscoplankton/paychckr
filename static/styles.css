@@ -10791,8 +10791,6 @@ textarea.form-control-lg {
 #flash-alert {
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(5px);
-  animation: disappear 10s forwards;
-  transition: all 900ms ease;
 }
 
 @keyframes disappear {
