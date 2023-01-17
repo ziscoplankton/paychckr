@@ -10,7 +10,7 @@ from sqlalchemy import func
 from sqlalchemy.orm import sessionmaker, scoped_session
 
 #DB MAIN SESSION
-engine = create_engine("sqlite:///cms.db", echo=False)
+engine = create_engine("sqlite:///paychckr/db/cms.db", echo=False)
 session_factory = sessionmaker(bind=engine)
 Session = scoped_session(session_factory)
 
