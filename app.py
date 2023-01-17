@@ -12,6 +12,7 @@ import re
 from db.db import Session
 from db.db import Users, Earnings, Shifts
 
+
 # CLASSES, HELPERS & CONST IMPORTS
 from helpers import TAX, SUPER, MEDICARE_LEVY
 from helpers import calculator, penalties, overtime
@@ -83,8 +84,6 @@ def register():
     else:
         flash('Welcome, please register below to create an account')
         return render_template("register.html", title = 'register')
-
-
 # LOGIN
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -134,7 +133,7 @@ def load():
             # and make dateTime object if user is not under salary
             # AKA SHIFT USER
             user = dbSession.query(Users).filter_by(id=session['user_id']).first()
-            dayShift = datetime.datetime.strptime(dateShift, "%Y-%m-%d")
+            dayShift = datetime.datetime.strptime(dateShift+" 00:00:00", "%Y-%m-%d %H:%M:%S")            
             shift = Shift(dayShift, startShift, endShift, breakShift, user.penalties)
             if shift.lengthShift <= 0:
                 flash('The shift values are wrong please review')
@@ -206,21 +205,23 @@ def index():
             # MAKE WEEKLY EARNINGS & SHIFTS
             currentWeekDates = getCurrent_Dates(myDate, 'week')
 
-            currentWeekShifts = dbSession.query(Shifts).filter_by(user_id = session['user_id']).filter(Shifts.date >= currentWeekDates[0]).filter(Shifts.date <= currentWeekDates[1]).all()
+            currentWeekShifts = dbSession.query(Shifts).filter_by(user_id = session['user_id']).filter(Shifts.date.between(currentWeekDates[0], currentWeekDates[1])).all()
 
         else:
             myDate = datetime.datetime.strptime(request.args.get('viewDate'), '%Y-%m-%d')
             currentWeekDates = getCurrent_Dates(myDate, 'week')
-            currentWeekShifts = dbSession.query(Shifts).filter_by(user_id = session['user_id']).filter(Shifts.date >= currentWeekDates[0]).filter(Shifts.date <= currentWeekDates[1]).all()
-
-
+            currentWeekShifts = dbSession.query(Shifts).filter_by(user_id = session['user_id']).filter(Shifts.date.between(currentWeekDates[0], currentWeekDates[1])).all()
+        
         if currentWeekShifts:
             for shift in currentWeekShifts:
+                print(shift)
                 currentWeeknet_earnings += shift.net_income
                 currentWeekHours += shift.hours
                 currentWeekTaxes += shift.taxes
                 currentWeekgross_earnings += shift.gross_income
-        return render_template("index.html",myDate = myDate, currentHours = currentWeekHours, currentnet_earnings = currentWeeknet_earnings, currentWeekgross_earnings = currentWeekgross_earnings, currentTaxes = currentWeekTaxes)
+
+        print(dbSession.query(Shifts).filter_by(user_id = session['user_id']).filter(Shifts.date >= currentWeekDates[0]).all())
+        return render_template("index.html",myDate = myDate, currentHours = currentWeekHours, currentnet_earnings = currentWeeknet_earnings, currentWeekgross_earnings = currentWeekgross_earnings, currentTaxes = currentWeekTaxes, currentWeekDates = currentWeekDates)
     else:
         flash('Sorry something is wrong with your session and account, please login again')
         return redirect(url_for("login"))

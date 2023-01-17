@@ -10,7 +10,9 @@ from sqlalchemy import func
 from sqlalchemy.orm import sessionmaker, scoped_session
 
 #DB MAIN SESSION
-engine = create_engine("sqlite:///paychckr/db/cms.db", echo=False)
+#PATH PYTHONANYWHERE: 
+# engine = create_engine("sqlite:///paychckr/db/cms.db", echo=False)
+engine = create_engine("sqlite:///db/cms.db", echo=False)
 session_factory = sessionmaker(bind=engine)
 Session = scoped_session(session_factory)
 
@@ -77,7 +79,7 @@ class Shifts(Base):
         self.user_id = user_id
 
     def __repr__(self) -> str:
-        return f'User(id={self.id!r}, name={self.username!r})'
+        return f'Shift(user_id={self.user_id!r}, hours={self.hours!r}, gross_income={self.gross_income!r}, net_income={self.net_income!r}, taxes={self.taxes!r}, super={self.super!r})'
 
 class Earnings(Base):
     __tablename__ = 'earnings'
@@ -98,6 +100,6 @@ class Earnings(Base):
         self.shift_id = shift_id
 
     def __repr__(self) -> str:
-        return f'User(id={self.id!r}, name={self.username!r})'
+        return f'Earnings(user_id={self.id!r}, gross={self.gross_earnings!r}, net={self.net_earnings!r}, taxes={self.taxes!r}, super={self.super_earnings!r})'
 
 Base.metadata.create_all(bind=engine)

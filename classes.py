@@ -2,12 +2,12 @@ import datetime
 from datetime import date
 from helpers import strtoint, getCurrent_Dates, getPrevious_Dates
 from db.db import Shifts, Session
+from wtforms import Form, StringField, PasswordField, validators
 
 
 
 # DB SESSION
 dbSession = Session()
-
 
 # Model for shift creation before insert to db
 class Shift:

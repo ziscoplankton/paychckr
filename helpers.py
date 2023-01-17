@@ -58,22 +58,6 @@ def apology(message, code=400):
         return s
     return render_template("apology.html", top=code, bottom=escape(message))
 
-
-# Login required wrapper
-def login_required(f):
-    """
-    Decorate routes to require login.
-
-    https://flask.palletsprojects.com/en/1.1.x/patterns/viewdecorators/
-    """
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if session.get("user_id") is None:
-            return redirect("/login")
-        return f(*args, **kwargs)
-    return decorated_function
-
-
 # Local function to change str to int for shift calculations
 def strtoint(str):
     nstr = str.replace(':', '')
