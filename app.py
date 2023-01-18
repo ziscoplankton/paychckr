@@ -54,19 +54,38 @@ session_flask_user = Session_flask(app)
 def register():
     if request.method == 'POST':
         user = dbSession.query(Users).filter_by(username=request.form['username']).first()
+        email_check = dbSession.query(Users).filter_by(email=request.form['email']).first()
         if user:
-            return apology('Username not available')
+            flash('Sorry this username is used')
+            return redirect(url_for("register"))
+
+        elif email_check:
+            flash('Sorry this email is used')
+            return redirect(url_for("register"))
         else:
             if not request.form['payrate'] and (not request.form['salary'] and not request.form['weekly_hours']):
-                return apology('Fields missing')
+                flash('Some fields are missing')
+                return redirect(url_for("register"))
             else:
                 if request.form['password'] != request.form['confirmation']:
-                    return apology("passwords are different")
+                    flash('Passwords are different')
+                    return redirect(url_for("register"))
                 else:
-                    regex_check = re.search(r"[a-zA-Z0-9!@#$%^&*]{8,}", request.form.get("password"))
+                    regex_check = re.search(r"^(?=.[A-Za-z])(?=.\d)(?=.[@$!%#?&])[A-Za-z\d@$!%*#?&]{8,}$", request.form.get("password"))                    
                     if regex_check:
-                        if request.form['salary'] != '' and request.form['weekly_hours'] != '':
-                            insert = Users(username=request.form['username'], password=generate_password_hash(request.form['password']), email=request.form['email'], workplace = request.form['workplace'], paid_break = 1, annual_salary = request.form['salary'], weekly_hours = request.form['weekly_hours'])
+                        if request.form['salary'] != '':
+                            if request.form['weekly_hours'] != '':
+                                insert = Users(username=request.form['username'], password=generate_password_hash(request.form['password']), email=request.form['email'], workplace = request.form['workplace'], paid_break = 1, annual_salary = request.form['salary'], weekly_hours = request.form['weekly_hours'])
+                            else:
+                                flash('You need to enter some hours for your contract')
+                                return redirect(url_for("register"))
+                        elif request.form['weekly_hours'] != '':
+                            if request.form['salary'] != '':
+                                insert = Users(username=request.form['username'], password=generate_password_hash(request.form['password']), email=request.form['email'], workplace = request.form['workplace'], paid_break = 1, annual_salary = request.form['salary'], weekly_hours = request.form['weekly_hours'])
+                            else:
+                                flash('You need to enter a salary value for your contract')
+                                return redirect(url_for("register"))
+
                         elif 'penalties' in request.form and 'overtime' in request.form:
                             insert = Users(username=request.form['username'], password=generate_password_hash(request.form['password']), email=request.form['email'], workplace = request.form['workplace'], payrate = request.form['payrate'], overtime = 1, penalties = 1, paid_break = 1)
                         elif 'penalties' in request.form:
@@ -76,13 +95,16 @@ def register():
                         else:
                             insert = Users(username=request.form['username'], password=generate_password_hash(request.form['password']), email=request.form['email'], workplace = request.form['workplace'], payrate = request.form['payrate'])
                     else:
-                        return apology("Sorry your password must be 8 characters and have symbols")
+                        flash('Password must be 8 characters inc. numbers & symbols. Please ref to the password confirmation pop-up by cliking on the black key')
+                        return redirect(url_for("register"))                
+                
+                
                 dbSession.add(insert)
                 dbSession.commit()
                 flash('Your account has been created')
                 return redirect('/login')
     else:
-        flash('Welcome, please register below to create an account')
+        flash('Please fill in the form to register')
         return render_template("register.html", title = 'register')
 # LOGIN
 @app.route('/login', methods=['POST', 'GET'])
@@ -97,11 +119,13 @@ def login():
                 session['logged_in'] = True
                 return redirect(url_for("index"))
             else:
-                return apology('Wrong Password')
+                flash('Password is incorrect, please try again')
+                return redirect(url_for("login"))
         else:
-            return apology('User Unknown')
+            flash('Unknown email, please try again')
+            return redirect(url_for("login"))
     else:
-            flash('Hello there, you can register or login via the menu at the bottom')
+            flash('Please login or register via the menu below')
             return render_template('login.html')
 
 
@@ -184,9 +208,11 @@ def load():
                     flash(f'The shift for the {day} was created')
                     return redirect('/load')
                 else:
-                    return apology("Something wrong with your shift")
+                    flash("Something wrong with your shift")
+                    return redirect(url_for("load"))
         else:
-            return apology("Sorry something went wrong with the checks. Make sure to have a date, a start and a end time")
+            flash("Sorry something went wrong with the checks. Make sure to have a date, a start and a end time")
+            return redirect(url_for("load"))
 
 
 # HOME
@@ -214,13 +240,11 @@ def index():
         
         if currentWeekShifts:
             for shift in currentWeekShifts:
-                print(shift)
                 currentWeeknet_earnings += shift.net_income
                 currentWeekHours += shift.hours
                 currentWeekTaxes += shift.taxes
                 currentWeekgross_earnings += shift.gross_income
 
-        print(dbSession.query(Shifts).filter_by(user_id = session['user_id']).filter(Shifts.date >= currentWeekDates[0]).all())
         return render_template("index.html",myDate = myDate, currentHours = currentWeekHours, currentnet_earnings = currentWeeknet_earnings, currentWeekgross_earnings = currentWeekgross_earnings, currentTaxes = currentWeekTaxes, currentWeekDates = currentWeekDates)
     else:
         flash('Sorry something is wrong with your session and account, please login again')
@@ -240,7 +264,6 @@ def summary():
         dates = getCurrent_Dates(date.today(), 'week')
         myDate1 = dates[0]
         myDate2 = dates[1]
-        flash('Please choose the dates that you\'d like to view')
 
     shifts = dbSession.query(Shifts).filter_by(user_id = session['user_id']).filter(Shifts.date >= myDate1).filter(Shifts.date <= myDate2).all()
     cardShifts = cardShift(shifts)
@@ -256,9 +279,10 @@ def delete():
         item = dbSession.query(Shifts).filter_by(user_id = session['user_id']).filter_by(id = int(request.args.get('id'))).delete()
         dbSession.commit()
         flash('You\'ve successfully deleted a shift')
-        return redirect('/summary')
+        return redirect(url_for("summary"))
     else:
-        return apology('Deletion did not worked', 204)
+        flash('Deletion unsuccessful')
+        return redirect(url_for("summary"))
 
 
 # EDIT SHIFT
@@ -268,15 +292,13 @@ def edit():
 
     if request.method == 'POST':
         user = dbSession.query(Users).filter_by(id = session['user_id']).first()
-        date = datetime.datetime.strptime(request.form['shift-date'], "%Y-%m-%d")
-        shiftToEdit = dbSession.query(Shifts).filter_by(date = date).first()
+        shiftToEdit = dbSession.query(Shifts).filter_by(id = request.form['shift_id']).filter_by(user_id = user.id).first()
         earningsToEdit = dbSession.query(Earnings).filter_by(shift_id = shiftToEdit.id).first()
         dayShift = datetime.datetime.strptime(shiftToEdit.date.strftime("%Y-%m-%d"), "%Y-%m-%d")
         if user.penalties:
             penalties = user.penalties
         else:
             penalties = 0
-
         shift = Shift(dayShift, request.form['shift-start'], request.form['shift-end'], request.form['shift-break'], penalties)
         if shift and shiftToEdit and earningsToEdit:
             day = dayShift.strftime("%a %d %b %Y")
@@ -329,16 +351,19 @@ def edit():
             flash('You\'ve successfully edited a shift')
             return redirect('/summary')
         else:
-            return apology('Not authorised', 302)
+            flash("Not authorised")
+            return redirect(url_for("summary"))
     else:
         if int(request.args.get('id')):
             shiftToEdit = dbSession.query(Shifts).filter_by(id = request.args.get('id')).first()
             if shiftToEdit:
-                return render_template('edit.html', user = session['user_id'], date = shiftToEdit.date.strftime('%Y-%m-%d'))
+                return render_template('edit.html', user = session['user_id'], date = shiftToEdit.date.strftime('%Y-%m-%d'), shift_id = shiftToEdit.id)
             else:
-                return apology('Shift was not found', 404)
+                flash("Shift was not found")
+                return redirect(url_for("summary"))
         else:
-            return apology('Not authorised', 302)
+            flash("Request not authorised")
+            return redirect(url_for("summary"))
 
 # EDIT PROFILE
 @app.route('/profile', methods =['GET', 'POST'])
@@ -349,7 +374,8 @@ def profile():
         if profile:
             return render_template('profile.html', profile = profile, user = profile )
         else:
-            return apology('User not found', 404)
+            flash('User not found')
+            return redirect(url_for("index"))
     else:
         profile = dbSession.query(Users).filter_by(id = request.form['id']).first()
         password = generate_password_hash(request.form['password'])
@@ -371,7 +397,8 @@ def profile():
             flash('You\'ve successfully updated your profile')
             return redirect('/')
         else:
-            return apology('Passwords are not identical', 302)
+            flash('Password not identical')
+            return redirect(url_for("index"))
 
 
 # Handling errors

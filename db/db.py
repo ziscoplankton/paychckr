@@ -3,9 +3,9 @@ from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy import Column, Integer, String, Float
 from sqlalchemy.orm import relationship
 from sqlalchemy import ForeignKey
-from sqlalchemy import DateTime
+from sqlalchemy import DateTime, Date
 from sqlalchemy import func
-
+from datetime import datetime, date
 # DB Imports
 from sqlalchemy.orm import sessionmaker, scoped_session
 
@@ -33,7 +33,7 @@ class Users(Base):
     paid_break = Column(Integer, nullable=True, unique=False)
     annual_salary = Column(Integer, nullable=True, unique=False)
     weekly_hours = Column(Integer, nullable=True, unique=False)
-
+    date_creation = Column(Date, nullable=False, unique=False)
     shifts = relationship('Shifts', backref='users')
     earnings = relationship('Earnings', backref='users')
 
@@ -48,6 +48,7 @@ class Users(Base):
         self.paid_break = paid_break
         self.annual_salary = annual_salary
         self.weekly_hours = weekly_hours
+        self.date_creation = datetime.today()
 
     def __repr__(self) -> str:
         return f'User(id={self.id!r}, name={self.username!r})'

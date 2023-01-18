@@ -5,44 +5,44 @@
 <div class="container-fluid overflow-auto" style="max-height: 85%;">
   <div class="container-fluid my-3 d-flex justify-content-center align-items-center">
     <form action="/" method="GET" name="indexForm">
-      <input type="date" placeholder="dd-mm-yyyy" value="{{ myDate.strftime('%Y-%m-%d') }}"  onchange="getView()" class="rounded p-2 border border-primary" name="viewDate" id="viewDate" style="font-size: 0.5em; color: var(--bs-primary);">
+      <input type="date" placeholder="dd-mm-yyyy" value="{{ myDate.strftime('%Y-%m-%d') }}"  onchange="getView()" class="rounded p-2 border border-primary" name="viewDate" id="viewDate" style="font-size: 0.5em; color: var(--bs-primary); fill: var(--bs-primary);">
     </form>
   </div>
   <div class="container-fluid mt-3 py-3">
     <div class="cardBox row position-relative gap-5">
-      <div class="kard col-9 col-md-4 m-sm-auto m-md-auto position-relative bg-white p-3 shadow rounded d-flex justify-content-between" style="font-size: 0.6em !important;">
+      <div class="kard col-9 col-md-4 m-sm-auto m-md-auto position-relative bg-white border p-3 rounded d-flex justify-content-between" style="font-size: 0.6em !important;">
         <div>
-          <div class="numbers fw-bold opacity-50">{{ currentHours }}</div>
+          <div class="numbers fw-bold">{{ currentHours }}</div>
           <div class="cardName text-muted">Weekly hours</div>
         </div>
-        <div class="iconBx text-warning opacity-50">
+        <div class="iconBx text-warning">
           <ion-icon name="time-outline"></ion-icon>   
         </div>
       </div>
-      <div class="kard col-9 col-md-4 m-sm-auto m-md-auto position-relative bg-white p-3 shadow rounded d-flex justify-content-between" style="font-size: 0.6em !important;">
+      <div class="kard col-9 col-md-4 m-sm-auto m-md-auto position-relative bg-white border p-3 rounded d-flex justify-content-between" style="font-size: 0.6em !important;">
         <div>
           <div class="numbers fw-bold">{{ "$%.2f"|format(currentnet_earnings) }}</div>
           <div class="cardName text-muted">Marginal earnings</div>
         </div>
-        <div class="iconBx text-success opacity-50">
+        <div class="iconBx text-success">
           <ion-icon name="enter-outline"></ion-icon>
         </div>
       </div>
-      <div class="kard col-9 col-md-4 m-sm-auto m-md-auto position-relative bg-white p-3 shadow rounded d-flex justify-content-between" style="font-size: 0.6em !important;">
+      <div class="kard col-9 col-md-4 m-sm-auto m-md-auto position-relative bg-white border p-3 rounded d-flex justify-content-between" style="font-size: 0.6em !important;">
         <div>
           <div class="numbers fw-bold">{{ "$%.2f"|format(currentTaxes) }}</div>
           <div class="cardName text-muted">Marginal taxes</div>
         </div>
-        <div class="iconBx text-danger opacity-50">
+        <div class="iconBx text-danger">
           <ion-icon name="exit-outline"></ion-icon>  
         </div>
       </div>
-      <div class="mb-sm-5 kard col-9 col-md-4 m-sm-auto m-md-auto position-relative bg-white p-3 shadow rounded d-flex justify-content-between" style="font-size: 0.6em !important;">
+      <div class="mb-sm-5 kard col-9 col-md-4 m-sm-auto m-md-auto position-relative bg-white border p-3 rounded d-flex justify-content-between" style="font-size: 0.6em !important;">
         <div>
           <div class="numbers fw-bold">{{ "$%.2f"|format(currentWeekgross_earnings) }}</div>
           <div class="cardName text-muted">Marginal Gross</div>
         </div>
-        <div class="iconBx text-info opacity-50">
+        <div class="iconBx text-info">
           <ion-icon name="settings-outline"></ion-icon>  
         </div>
       </div>

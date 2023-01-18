@@ -10823,7 +10823,6 @@ input[type=date]::-webkit-calendar-picker-indicator {
 .cardBox .kard .numbers {
   font-size: 2.2em;
   color: #0073b7;
-  text-shadow: 2px 2px rgba(0, 0, 0, 0.3);
   opacity: 0.75;
 }
 .cardBox .kard .cardName {
